@@ -12,13 +12,11 @@ def read_data(path):
 def plot_data(data):
     plot.scatter(data['population'], data['profit'], color='r', marker='x')
 
-    plot.title('Visualizing Population vs Profit')
+    plot.title('Prediction Model')
 
     plot.xlabel("Population of City in 10,000's")
 
     plot.ylabel('Profit in $10,000s')
-
-    # plot.show()
 
 
 def plot_prediction(theta_zero, theta_one, population_vector):
@@ -27,10 +25,6 @@ def plot_prediction(theta_zero, theta_one, population_vector):
 
     # plotting the regression line
     plot.plot(population_vector, y_pred, color="b")
-
-    # putting labels
-    plot.xlabel('x')
-    plot.ylabel('y')
 
     # function to show plot
     plot.show()
@@ -48,14 +42,12 @@ def calculate_error(theta_zero, theta_one, data):
 
 def update_thetas(theta_zero_initial, theta_one_initial, alpha, population, profit):
     N = len(population)
-    error1 = 1
-    error2 = 0.5
-    for i in range(0, len(population)):
-        x = population[i]
-        y = profit[i]
+    error1 = 0
+    error2 = 0
+    for x, y in zip(population, profit):
         prediction = theta_zero_initial + theta_one_initial * x
         error1 += prediction - y
-        error2 += prediction - y * x
+        error2 += (prediction - y) * x
     theta_zero = theta_zero_initial - (alpha / N) * error1
     theta_one = theta_one_initial - (alpha / N) * error2
     return [theta_zero, theta_one]
@@ -64,7 +56,7 @@ def update_thetas(theta_zero_initial, theta_one_initial, alpha, population, prof
 def linear_regression(data):
     theta_zero = 0
     theta_one = 0
-    alpha = 0.001
+    alpha = 0.01
     population_vector = data['population']
     profit_vector = data['profit']
     i = 0

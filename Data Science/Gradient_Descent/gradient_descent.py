@@ -7,6 +7,15 @@ import pandas as pd  # For reading data from file
 
 
 def read_data(path, flag):
+    """[Function to read data from txt file]
+
+    Arguments:
+        path {[String]} -- [relative path to the dataset.txt]
+        flag {[int]} -- [a flag to differentitate what dataset is used and how many columns to make]
+
+    Returns:
+        [Pandas Dataframe] -- [Dataframe contains columns of data depending upon the flag]
+    """
     # Reading Data
     data = pd.read_csv(path, sep=",", header=None)
     if flag == 0:
@@ -17,6 +26,11 @@ def read_data(path, flag):
 
 
 def plot_data(data):
+    """[Function to plot 2D scatter plot]
+
+    Arguments:
+        data {[Pandas dataframe]} -- [Works only on 2D or 2 feature data]
+    """
     plot.scatter(data['population'], data['profit'], color='r', marker='x')
 
     plot.title('Prediction Model')
@@ -24,9 +38,16 @@ def plot_data(data):
     plot.xlabel("Population of City in 10,000's")
 
     plot.ylabel('Profit in $10,000s')
+    # plot.show()       #Uncomment if only data is to be plotted
 
 
 def plot_prediction(thetas, x):
+    """[Function to plot predicted hyperplane with respect to original data]
+    
+    Arguments:
+        thetas {[array/list of thetas]} -- [Optimal thetas obtained after gradient descent]
+        x {[input vector]} -- [Input/population vector that will help in plotting line]
+    """
     # predicted response vector
     y_pred = np.dot(x, thetas)
     x = x[:, 1]  # removing the one extra column of all 1
@@ -38,6 +59,14 @@ def plot_prediction(thetas, x):
 
 
 def normalize_features(data):
+    """[To normalize all features so that no single feature dominates]
+    
+    Arguments:
+        data {[pandas dataframe]} -- [contains the columns of dataset2.txt]
+    
+    Returns:
+        [array/list] -- [array of normalized data, array of std_deviation, means of all features]
+    """
     feature1 = data['size']
     feature2 = data['bed']
     feature3 = data['price']
@@ -59,6 +88,17 @@ def normalize_features(data):
 
 
 def vectorize_data(data, thetas, flag, n):
+    """[function to vectorize data so that iterations are avoided]
+    
+    Arguments:
+        data {[pandas dataframe]} -- [contains original data]
+        thetas {list} -- [contains all thetas ]
+        flag {[int]} -- [to decide what dataset is being used]
+        n {[int]} -- [indicates columns of dataset/features of dataset]
+    
+    Returns:
+        [array] -- [vectorized dataframe and thetas]
+    """
     if flag == 1:
         x1 = np.array(data['size'])
         x2 = np.array(data['bed'])
@@ -78,6 +118,16 @@ def vectorize_data(data, thetas, flag, n):
 
 
 def calculate_error(thetas, x, y):
+    """[function to calculate objective function/loss]
+    
+    Arguments:
+        thetas {[list]} -- [contains thetas]
+        x {[input vector/matrix]} -- [contains vectorized matrix of input]
+        y {[Y/output matrix]} -- [contains vector of output feature]
+    
+    Returns:
+        [int] -- [returns sum of errors for all samples]
+    """
     m = len(data)
     prediction = np.dot(x, thetas)
     error = prediction - y
@@ -86,6 +136,18 @@ def calculate_error(thetas, x, y):
 
 
 def update_thetas(thetas, alpha, x, y, n):
+    """[function to update theta/gradient descent]
+    
+    Arguments:
+        thetas {[list]} -- [contains list of thetas to be updated]
+        alpha {[float]} -- [learning rate]
+        x {[input vector/matrix]} -- [vectorized input matrix]
+        y {[output vector]} -- [vectorized output matrix]
+        n {[int]} -- [no. of columns in dataset]
+    
+    Returns:
+        [list] -- [returns updated thetas]
+    """
     N = len(x)
     prediction = np.dot(x, thetas)
     error = (prediction - y) * x
@@ -96,11 +158,21 @@ def update_thetas(thetas, alpha, x, y, n):
 
 
 def linear_regression(data, flag):
+    """[driver function for linear regression]
+    
+    Arguments:
+        data {[pandas dataframe]} -- [contains original data]
+        flag {[int]} -- [to indicate what dataset is used]
+    
+    Returns:
+        [list] -- [returns optimal thetas and vectorized input]
+    """
     n = len(data.columns)
-    thetas = np.zeros(n)
+    thetas = np.zeros(n) #array of thetas
     alpha = 0.01  # optimal alpha when while loop convergence is used, outputs in 1 seconds
     i = 0
-    prev_err = 10000000
+    prev_err = 10000000  #dummy error var to check convergence
+
     # iterations = 100000 # 90 seconds for 100k iterations
     # costs = np.zeros(iterations)
     x, y, thetas = vectorize_data(data, thetas, flag, n)
@@ -124,16 +196,15 @@ if __name__ == '__main__':
     start_time = time.time()
 
     data = read_data("data/data1.txt", 0)
-    # data, means, std_d = normalize_features(data)
-    # plot_data(data, 1)
-
+    # data, means, std_d = normalize_features(data)  ##Uncomment when dataset 2 is to be used
     thetas, x = linear_regression(data, 0)
-    print(thetas)
-    print("--- %s seconds ---" % (time.time() - start_time))  # Vectorized version takes nearly 1 second to run
+
+    print("--- %s seconds ---" % (time.time() - start_time))
 
     # To check if our predictions are correct#
     plot_data(data)
     plot_prediction(thetas, x)
+    
     # while 1:
     #     x1 = float(input("Enter size of house: "))
     #     x2 = float(input("Enter bedrooms of house: "))

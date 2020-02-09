@@ -1,4 +1,3 @@
-import statistics
 import time
 
 import matplotlib.pyplot as plot  # To plot the data
@@ -6,22 +5,17 @@ import numpy as np
 import pandas as pd  # For reading data from file
 
 
-def read_data(path, flag):
+def read_data(path):
     """[Function to read data from txt file]
 
     Arguments:
         path {[String]} -- [relative path to the dataset.txt]
-        flag {[int]} -- [a flag to differentitate what dataset is used and how many columns to make]
 
     Returns:
-        [Pandas Dataframe] -- [Dataframe contains columns of data depending upon the flag]
+        [Pandas Dataframe] -- [Dataframe contains columns of data]
     """
     # Reading Data
     data = pd.read_csv(path, sep=",", header=None)
-    if flag == 0:
-        data.columns = ["population", "profit"]
-    else:
-        data.columns = ["size", "bed", "price"]
     return data
 
 
@@ -31,7 +25,7 @@ def plot_data(data):
     Arguments:
         data {[Pandas dataframe]} -- [Works only on 2D or 2 feature data]
     """
-    plot.scatter(data['population'], data['profit'],
+    plot.scatter(data.iloc[:, 0], data.iloc[:, 1],
                  color='r', marker='x', label='Training Data')
 
     plot.title('Data Plot')
@@ -50,9 +44,8 @@ def plot_prediction(thetas, x, data):
         x {[input vector]} -- [Input/population vector that will help in plotting line]
     """
 
-    plot.scatter(data['population'], data['profit'],
+    plot.scatter(data.iloc[:, 0], data.iloc[:, 1],
                  color='r', marker='x', label='Training Data')
-
     # predicted response vector
     y_pred = np.dot(x, thetas)
     x = x[:, 1]  # removing the one extra column of all 1
@@ -75,24 +68,12 @@ def normalize_features(data):
     Returns:
         [array/list] -- [array of normalized data, array of std_deviation, means of all features]
     """
-    feature1 = data['size']
-    feature2 = data['bed']
-    feature3 = data['price']
-    mean1 = (sum(feature1) / len(feature1))
-    mean2 = (sum(feature2) / len(feature2))
-    mean3 = (sum(feature3) / len(feature3))
-    std1 = statistics.stdev(feature1)
-    std2 = statistics.stdev(feature2)
-    std3 = statistics.stdev(feature3)
-    means = np.array([mean1, mean2, mean3])
-    std_d = np.array([std1, std2, std3])
-    feature1 = (feature1 - mean1)
-    feature2 = (feature2 - mean2)
-    feature3 = (feature3 - mean3)
-    feature1 /= std1
-    feature2 /= std2
-    feature3 /= std3
-    return [pd.DataFrame({'size': feature1, 'bed': feature2, 'price': feature3}), means, std_d]
+    feature = data.iloc[:, :].to_numpy()
+    mean = (sum(feature) / len(feature))
+    std = np.std(feature, axis=0)
+    feature = (feature - mean)
+    feature /= std
+    return [pd.DataFrame(feature), mean, std]
 
 
 def normal_equation(x, y):
@@ -106,7 +87,6 @@ def normal_equation(x, y):
         [list] -- [returns a list of thetas]
     """
     # Takes 0.01s for dataset1 :O and 0.006 for dataset 2
-
     x_trans = np.transpose(x)
     x_trans_x = np.dot(x_trans, x)
     x_trans_y = np.dot(x_trans, y)
@@ -114,32 +94,20 @@ def normal_equation(x, y):
     return np.dot(inverse, x_trans_y)
 
 
-def vectorize_data(data, thetas, flag, n):
+def vectorize_data(data, thetas, n):
     """[function to vectorize data so that iterations are avoided]
 
     Arguments:
         data {[pandas dataframe]} -- [contains original data]
         thetas {list} -- [contains all thetas ]
-        flag {[int]} -- [to decide what dataset is being used]
         n {[int]} -- [indicates columns of dataset/features of dataset]
 
     Returns:
-        [array] -- [vectorized dataframe and thetas]
+        [array] -- [vectorized x, y and thetas]
     """
-    if flag == 1:
-        x1 = np.array(data['size'])
-        x2 = np.array(data['bed'])
-        x = np.array([x1, x2])
-        x = np.transpose(x)
-        x = np.insert(x, 0, 1, axis=1)
-        y = np.array(data['price'])
-        y = y.reshape(47, 1)
-    else:
-        x = np.array(data['population'])
-        x = x.reshape(97, 1)
-        x = np.insert(x, 0, 1, axis=1)
-        y = np.array(data['profit'])
-        y = y.reshape(97, 1)
+    x = data.iloc[:, :len(data.columns) - 1].to_numpy()  # converting all columns except last one to numpy array
+    x = np.insert(x, 0, 1, axis=1)  # appending an all 1 column to start
+    y = data.iloc[:, len(data.columns) - 1:].to_numpy()  # converting last one to numpy array
     thetas = thetas.reshape(n, 1)
     return [x, y, thetas]
 
@@ -184,29 +152,27 @@ def update_thetas(thetas, alpha, x, y, n):
     return thetas
 
 
-def linear_regression_normal_eq(data, flag):
+def linear_regression_normal_eq(data):
     """[Function to update thetas in one go using normal eq]
 
     Arguments:
         data {[dataframe]} -- [original dataframe]
-        flag {[int]} -- [to decide what dataset is used while vectorizing]
 
     Returns:
         [list] -- [returns a list of optimal thetas and vectorized input]
     """
     n = len(data.columns)
     thetas = np.zeros(n)  # array of thetas
-    x, y, thetas = vectorize_data(data, thetas, flag, n)
+    x, y, thetas = vectorize_data(data, thetas, n)
     thetas = normal_equation(x, y)
     return [thetas, x]
 
 
-def linear_regression_with_gradient(data, flag):
+def linear_regression_with_gradient(data):
     """[driver function for linear regression with gradient_descent]
 
     Arguments:
         data {[pandas dataframe]} -- [contains original data]
-        flag {[int]} -- [to indicate what dataset is used]
 
     Returns:
         [list] -- [returns optimal thetas and vectorized input]
@@ -220,7 +186,7 @@ def linear_regression_with_gradient(data, flag):
 
     # iterations = 100000 # 90 seconds for 100k iterations
     # costs = np.zeros(iterations)
-    x, y, thetas = vectorize_data(data, thetas, flag, n)
+    x, y, thetas = vectorize_data(data, thetas, n)
 
     #          Gradient Descent Method start       ##
 
@@ -263,20 +229,30 @@ def prediction_test(means, std_d, thetas):
     # descent
 
 
+def prediction_test_with_normal(thetas):
+    x1 = float(input("Enter size of house: "))
+    x2 = float(input("Enter bedrooms of house: "))
+    x_pred = np.array([x1, x2])
+    x_pred = np.insert(x_pred, 0, 1, axis=0)
+    profit = np.dot(x_pred, thetas)
+    # $293081.4643349 by normal eq and $293081.46845345 by gradient for size=1650, beds=3
+    print("Price is: ${0}".format(profit))
+
+
 if __name__ == '__main__':
+    data = read_data("data/data2.txt")
+
     start_time = time.time()
 
-    data = read_data("data/data2.txt", 1)
-    # plot_data(data)
-
-    # Uncomment when dataset 2 is to be used
-    data, means, std_d = normalize_features(data)
-    # thetas, x = linear_regression_normal_eq(data, 1)
-    thetas, x = linear_regression_with_gradient(data, 1)
-
+    # Normalize when dataset 2 is to be used
+    # data, means, std_d = normalize_features(data)
+    thetas, x = linear_regression_normal_eq(data)
+    # thetas, x = linear_regression_with_gradient(data)
     print("--- %s seconds ---" % (time.time() - start_time))
+    # print(thetas)
 
     # To check if our predictions are correct for dataset 1
     # plot_prediction(thetas, x, data)
 
-    prediction_test(means, std_d, thetas)  # for dataset 2
+    prediction_test_with_normal(thetas)  # for dataset 2
+    # prediction_test(means, std_d, thetas)  # for dataset 2

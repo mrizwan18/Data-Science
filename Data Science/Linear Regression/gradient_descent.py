@@ -240,7 +240,8 @@ def prediction_test_with_normal(thetas):
 
 
 if __name__ == '__main__':
-    data = read_data("data/data2.txt")
+    data = read_data("data/data1.txt")
+    plot_data(data)
 
     start_time = time.time()
 
@@ -252,7 +253,7 @@ if __name__ == '__main__':
     # print(thetas)
 
     # To check if our predictions are correct for dataset 1
-    # plot_prediction(thetas, x, data)
+    plot_prediction(thetas, x, data)
 
-    prediction_test_with_normal(thetas)  # for dataset 2
+    # prediction_test_with_normal(thetas)  # for dataset 2
     # prediction_test(means, std_d, thetas)  # for dataset 2

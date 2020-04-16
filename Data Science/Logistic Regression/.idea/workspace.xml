@@ -2,18 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="80ec1b0f-5ca4-4b93-a201-3602356f537f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../Gradient_Descent/.idea/Gradient_Descent.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Gradient_Descent/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Gradient_Descent/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Gradient_Descent/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Gradient_Descent/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Gradient_Descent/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Gradient_Descent/Assignment_1 Linear Regression.docx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Gradient_Descent/data/data1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Gradient_Descent/data/data2.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Gradient_Descent/gradient_descent.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/regularize.py" beforeDir="false" afterPath="$PROJECT_DIR$/regularize.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,6 +24,28 @@
                 <element signature="e#326#770#0" />
                 <element signature="e#798#836#0" />
                 <element signature="e#878#1315#0" />
+                <element signature="e#1368#2146#0" />
+                <element signature="e#2169#2200#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/logistic.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="527">
+              <caret line="66" selection-start-line="66" selection-end-line="66" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+                <element signature="e#162#291#0" />
+                <element signature="e#326#805#0" />
+                <element signature="e#833#871#0" />
+                <element signature="e#916#1111#0" />
+                <element signature="e#1134#1165#0" />
+                <element signature="e#1202#1570#0" />
+                <element signature="e#1991#2288#0" />
+                <element signature="e#2338#2540#0" />
               </folding>
             </state>
           </provider>
@@ -81,22 +93,12 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane" />
       <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="Logistic Regression" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Logistic Regression" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/PYTHON/FB" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Linear Regression" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -198,12 +200,12 @@
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16369048" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16369048" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3584288" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3289689" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3535188" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -219,6 +221,16 @@
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>feature</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>y</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>error</expression-string>
         <language-id>Python</language-id>
@@ -254,16 +266,6 @@
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
-      <expression>
-        <expression-string>j_1</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>j_0</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
@@ -296,24 +298,11 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/check.py" />
-    <entry file="file://$PROJECT_DIR$/logistic.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="444">
-          <caret line="122" column="30" selection-start-line="122" selection-start-column="30" selection-end-line="122" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#162#291#0" />
-            <element signature="e#326#805#0" />
-            <element signature="e#833#871#0" />
-            <element signature="e#916#1111#0" />
-            <element signature="e#1134#1165#0" />
-            <element signature="e#1202#1570#0" />
-            <element signature="e#1614#1949#0" />
-            <element signature="e#1991#2288#0" />
-            <element signature="e#2338#2540#0" />
-          </folding>
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/l0.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/l100.png">
+      <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/regularize.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -325,6 +314,26 @@
             <element signature="e#326#770#0" />
             <element signature="e#798#836#0" />
             <element signature="e#878#1315#0" />
+            <element signature="e#1368#2146#0" />
+            <element signature="e#2169#2200#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logistic.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="66" selection-start-line="66" selection-end-line="66" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#162#291#0" />
+            <element signature="e#326#805#0" />
+            <element signature="e#833#871#0" />
+            <element signature="e#916#1111#0" />
+            <element signature="e#1134#1165#0" />
+            <element signature="e#1202#1570#0" />
+            <element signature="e#1991#2288#0" />
+            <element signature="e#2338#2540#0" />
           </folding>
         </state>
       </provider>

@@ -88,9 +88,9 @@ def update_thetas(thetas, x, y, alpha, r_lambda):
     N = len(x)
     prediction = sigmoid(np.dot(x, thetas))
     term = np.dot(x.transpose(), (prediction - y))
-    j_0 = alpha / N * term[0]
-    j_1 = alpha / N * term[1:] + (alpha * r_lambda / N) * thetas[1:]
-    grad = np.vstack((j_0[:, np.newaxis], j_1))
+    theta0 = alpha / N * term[0]
+    theta1 = alpha / N * term[1:] + (alpha * r_lambda / N) * thetas[1:]
+    grad = np.vstack((theta0[:, np.newaxis], theta1))
     return grad
 
 
